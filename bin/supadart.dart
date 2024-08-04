@@ -51,20 +51,26 @@ void main(List<String> arguments) async {
   YamlMap? mappings;
 
   final configPath = results['config'] ?? defaultConfigFile;
+  if (!File(configPath).existsSync()) {
+    print('Config file not found at $configPath');
+    print('Please run `supadart -i` to create a config file');
+    exit(1);
+  }
+
   final configFile = File(configPath);
   final configContent = await configFile.readAsString();
   final config = loadYaml(configContent);
 
-  url = results['url'] ?? config['supabase_url'] ?? '';
-  anonKey = results['key'] ?? config['supabase_anon_key'] ?? '';
+  url = config['supabase_url'] ?? '';
+  anonKey = config['supabase_anon_key'] ?? '';
   if (url.isEmpty || anonKey.isEmpty) {
     print("Please provide supabase_url and supabase_anon_key in .yaml file");
     print('use -h or --help for help');
     exit(1);
   }
 
-  isDart = results['dart'] ? true : config['dart'] ?? false;
-  output = results['output'] ?? config['output'] ?? './lib/models/';
+  isDart = config['dart'] ?? false;
+  output = config['output'] ?? './lib/models/';
   mappings = config['mappings'];
 
   print('URL: $url');
