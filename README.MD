@@ -41,25 +41,25 @@ final allBooks = await supabase
 
 ### Conversion Table 📊
 
-| Supabase Identifier | PostgreSQL Format           | JSON Type | Dart Type            | Runtime Tested <img src="https://github.com/mmvergara/supadart/actions/workflows/dart.yml/badge.svg?branch=main%22"/> |
-| ------------------- | --------------------------- | --------- | -------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| # int2              | smallint                    | integer   | int                  | type ✅ type[]✅                                                                                                      |
-| # int4              | integer                     | integer   | int                  | type ✅ type[]✅                                                                                                      |
-| # int8              | bigint                      | integer   | BigInt               | type ✅ type[]✅                                                                                                      |
-| # float4            | real                        | number    | double               | type ✅ type[]✅                                                                                                      |
-| # float8            | double precision            | number    | double               | type ✅ type[]✅                                                                                                      |
-| # numeric           | numeric                     | number    | num                  | type ✅ type[]✅                                                                                                      |
-| {} json             | json                        | object    | Map<String, dynamic> | type ✅ type[]✅                                                                                                      |
-| {} jsonb            | jsonb                       | object    | Map<String, dynamic> | type ✅ type[]✅                                                                                                      |
-| T text              | text                        | string    | String               | type ✅ type[]✅                                                                                                      |
-| T varchar           | character varying           | string    | String               | type ✅ type[]✅                                                                                                      |
-| T uuid              | uuid                        | string    | String               | type ✅ type[]✅                                                                                                      |
-| 🗓️ date             | date                        | string    | DateTime             | type ✅ type[]✅                                                                                                      |
-| 🗓️ time             | time without time zone      | string    | DateTime             | type ✅ type[]✅                                                                                                      |
-| 🗓️ timetz           | time with time zone         | string    | DateTime             | type ✅ type[]✅                                                                                                      |
-| 🗓️ timestamp        | timestamp without time zone | string    | DateTime             | type ✅ type[]✅                                                                                                      |
-| 🗓️ timestamptz      | timestamp with time zone    | string    | DateTime             | type ✅ type[]✅                                                                                                      |
-| 💡 bool             | boolean                     | boolean   | bool                 | type ✅ type[]✅                                                                                                      |
+| Supabase Identifier | PostgreSQL Format           | JSON Type | Dart Type            | Dart Array       |
+| ------------------- | --------------------------- | --------- | -------------------- | ---------------- |
+| # int2              | smallint                    | integer   | int                  | type ✅ type[]✅ |
+| # int4              | integer                     | integer   | int                  | type ✅ type[]✅ |
+| # int8              | bigint                      | integer   | BigInt               | type ✅ type[]✅ |
+| # float4            | real                        | number    | double               | type ✅ type[]✅ |
+| # float8            | double precision            | number    | double               | type ✅ type[]✅ |
+| # numeric           | numeric                     | number    | num                  | type ✅ type[]✅ |
+| {} json             | json                        | object    | Map<String, dynamic> | type ✅ type[]✅ |
+| {} jsonb            | jsonb                       | object    | Map<String, dynamic> | type ✅ type[]✅ |
+| T text              | text                        | string    | String               | type ✅ type[]✅ |
+| T varchar           | character varying           | string    | String               | type ✅ type[]✅ |
+| T uuid              | uuid                        | string    | String               | type ✅ type[]✅ |
+| 🗓️ date             | date                        | string    | DateTime             | type ✅ type[]✅ |
+| 🗓️ time             | time without time zone      | string    | DateTime             | type ✅ type[]✅ |
+| 🗓️ timetz           | time with time zone         | string    | DateTime             | type ✅ type[]✅ |
+| 🗓️ timestamp        | timestamp without time zone | string    | DateTime             | type ✅ type[]✅ |
+| 🗓️ timestamptz      | timestamp with time zone    | string    | DateTime             | type ✅ type[]✅ |
+| 💡 bool             | boolean                     | boolean   | bool                 | type ✅ type[]✅ |
 
 > [Other Types](https://github.com/mmvergara/supadart/blob/main/other-types.md)
 
@@ -91,10 +91,6 @@ dart pub add intl
 
 ## 2. Generate Dart Classes
 
-### Using the [Web App](https://supadart.vercel.app/)
-
-### Using the Dart CLI
-
 #### Installation
 
 ```bash
@@ -102,14 +98,12 @@ dart pub add intl
 dart pub global activate supadart
 ```
 
-```bash
-# 🚀 Run via
-supadart
-# or
-dart pub global run supadart
-```
-
 #### Configuration
+
+```bash
+# 🏠 Initial config file
+supadart -i
+```
 
 Example of `supadart.yaml` file:
 
@@ -122,7 +116,7 @@ supabase_anon_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # Optional, where to place the generated classes files
 output: lib/models/
 # Optional, if you are not using Flutter, just normal Dart project
-flutter: true
+dart: true
 # Optional, used to map table names to class names(case-sensitive)
 mappings:
   books: book
@@ -139,9 +133,6 @@ supadart
 
 # If you have a .yaml file in a different location
 supadart -c path/to/.yaml
-
-# If you dont have a .yaml file specify the Supabase URL and ANON KEY
-supadart -u <your-supabase-url> -k <your-supabase-anon-key>
 
 ```
 
