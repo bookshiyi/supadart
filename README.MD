@@ -100,11 +100,6 @@ dart pub global activate supadart
 
 #### Configuration
 
-```bash
-# 🏠 Initial config file
-supadart -i
-```
-
 Example of `supadart.yaml` file:
 
 ```yaml
@@ -142,7 +137,6 @@ supadart -c path/to/.yaml
 
 ```bash
 -h, --help         Show usage information
--i, --init         Initialize config file supadart.yaml
 -c, --config       Path to config file of yaml         --(default: supadart.yaml)
 -v, --version      v1.3.8
 ```

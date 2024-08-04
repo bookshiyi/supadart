@@ -14,16 +14,12 @@ const String reset = '\x1B[0m'; // Reset to default color
 void main(List<String> arguments) async {
   final defaultConfigFile = 'supadart.yaml';
   final parser = ArgParser()
-    ..addFlag('help',
-        abbr: 'h', negatable: false, help: 'Show usage information')
-    ..addFlag('init',
-        abbr: 'i',
-        negatable: false,
-        help: 'Initialize config file supadart.yaml ')
     ..addOption('config',
         abbr: 'c',
         defaultsTo: defaultConfigFile,
         help: 'Path to config file of .yaml')
+    ..addFlag('help',
+        abbr: 'h', negatable: false, help: 'Show usage information')
     ..addFlag('version', abbr: 'v', negatable: false, help: version);
 
   final results = parser.parse(arguments);
@@ -39,11 +35,6 @@ void main(List<String> arguments) async {
     exit(0);
   }
 
-  if (results['init']) {
-    await configFileInit(defaultConfigFile);
-    exit(0);
-  }
-
   String url;
   String anonKey;
   bool isDart;
@@ -52,9 +43,15 @@ void main(List<String> arguments) async {
 
   final configPath = results['config'] ?? defaultConfigFile;
   if (!File(configPath).existsSync()) {
-    print('Config file not found at $configPath');
-    print('Please run `supadart -i` to create a config file');
-    exit(1);
+    print('$configPath file not found, do you want to create one? (yes/no)');
+    final userInput = stdin.readLineSync();
+    if (userInput != null &&
+        (userInput.toLowerCase() == 'yes' || userInput.toLowerCase() == 'y')) {
+      await configFileInit(configPath);
+    } else {
+      print('File not created.');
+      exit(0);
+    }
   }
 
   final configFile = File(configPath);
@@ -65,7 +62,6 @@ void main(List<String> arguments) async {
   anonKey = config['supabase_anon_key'] ?? '';
   if (url.isEmpty || anonKey.isEmpty) {
     print("Please provide supabase_url and supabase_anon_key in .yaml file");
-    print('use -h or --help for help');
     exit(1);
   }
 
