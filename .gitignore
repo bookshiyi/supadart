@@ -38,3 +38,17 @@ next-env.d.ts
 
 # Cli
 cli.exe
+
+
+
+# https://dart.dev/guides/libraries/private-files
+# Created by `dart pub`
+.dart_tool/
+
+cli.exe
+supadart.exe
+.env
+
+lib/models/
+
+config.yaml

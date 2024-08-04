@@ -5,7 +5,7 @@ import 'package:supadart/generator/generator.dart';
 import 'package:supadart/generator/swagger.dart';
 import 'package:yaml/yaml.dart';
 
-import '../bin/supadart.dart';
+import '../../bin/supadart.dart';
 import 'boolean_bit_types.dart';
 import 'datetime_types.dart';
 import 'json_types.dart';
