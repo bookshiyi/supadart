@@ -27,8 +27,6 @@ supabase_anon_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Optional, where to place the generated classes files
 output: lib/models/
-# Optional, if you want to generate separated files for each classes
-separated: true
 # Optional, if you are not using Flutter, just normal Dart project
 dart: true
 # Optional, used to map table names to class names(case-sensitive)

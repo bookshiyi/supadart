@@ -22,28 +22,8 @@ void main(List<String> arguments) async {
         help: 'Initialize config file supadart.yaml ')
     ..addOption('config',
         abbr: 'c',
-        help:
-            'Path to config file of yaml         --(default: $defaultConfigFile)')
-    ..addOption('url',
-        abbr: "u",
-        help:
-            'Supabase URL                        --(default: $defaultConfigFile supabase_url)')
-    ..addOption('key',
-        abbr: "k",
-        help:
-            'Supabase ANON KEY                   --(default: $defaultConfigFile supabase_anon_key)')
-    ..addOption('output',
-        abbr: 'o',
-        help:
-            'Output file path, add ./ prefix     --(default: ./lib/generated_classes.dart or ./lib/models/ if --separated is enabled')
-    ..addFlag('dart',
-        abbr: 'd',
-        negatable: false,
-        help: 'Generation for pure Dart project    --(default: false)')
-    ..addFlag('separated',
-        abbr: 's',
-        negatable: false,
-        help: 'Separated files for each classes    --(default: false)')
+        defaultsTo: defaultConfigFile,
+        help: 'Path to config file of .yaml')
     ..addFlag('version', abbr: 'v', negatable: false, help: version);
 
   final results = parser.parse(arguments);
@@ -67,7 +47,6 @@ void main(List<String> arguments) async {
   String url;
   String anonKey;
   bool isDart;
-  bool isSeparated;
   String output;
   YamlMap? mappings;
 
@@ -79,23 +58,18 @@ void main(List<String> arguments) async {
   url = results['url'] ?? config['supabase_url'] ?? '';
   anonKey = results['key'] ?? config['supabase_anon_key'] ?? '';
   if (url.isEmpty || anonKey.isEmpty) {
-    print(
-        "Please provide --url and --key or Set supabase_url and supabase_anon_key in .yaml file");
+    print("Please provide supabase_url and supabase_anon_key in .yaml file");
     print('use -h or --help for help');
     exit(1);
   }
 
-  isSeparated = results['separated'] ? true : config['separated'] ?? false;
   isDart = results['dart'] ? true : config['dart'] ?? false;
-  output = results['output'] ??
-      config['output'] ??
-      (isSeparated ? './lib/models/' : './lib/generated_classes.dart');
+  output = results['output'] ?? config['output'] ?? './lib/models/';
   mappings = config['mappings'];
 
   print('URL: $url');
   print('ANON KEY: $anonKey');
   print('Output: $output');
-  print('Separated: $isSeparated');
   print('Dart: $isDart');
   print('Mappings: $mappings');
   print('=' * 50);
@@ -106,8 +80,7 @@ void main(List<String> arguments) async {
     exit(1);
   }
 
-  final files =
-      generateModelFiles(databaseSwagger, isDart, isSeparated, mappings);
+  final files = generateModelFiles(databaseSwagger, isDart, mappings);
   await generateAndFormatFiles(files, output);
 
   print('\n$green 🎉 Done! $reset');

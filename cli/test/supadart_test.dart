@@ -20,7 +20,6 @@ void main() async {
   String anonKey;
   YamlMap? mappings;
   bool isDart;
-  bool isSeparated;
   String output;
 
   final configPath = 'supadart.yaml';
@@ -31,15 +30,12 @@ void main() async {
 
   url = config['supabase_url'];
   anonKey = config['supabase_anon_key'];
-  isSeparated = config['separated'] ?? false;
   isDart = config['dart'] ?? false;
-  output = config['output'] ??
-      (isSeparated ? './lib/models/' : './lib/generated_classes.dart');
+  output = config['output'] ?? './lib/models/';
   mappings = config['mappings'];
 
   print('URL: $url');
   print('ANON KEY: $anonKey');
-  print('Separated: $isSeparated');
   print('Dart: $isDart');
   print('Output: $output');
   print('Mappings: $mappings');
@@ -50,7 +46,7 @@ void main() async {
     print("Failed to fetch database swagger");
     return;
   }
-  final files = generateModelFiles(databaseSwagger, false, false, mappings);
+  final files = generateModelFiles(databaseSwagger, false, mappings);
   await generateAndFormatFiles(files, './test/models/');
   print("\nGenerated Fresh Models from DB");
 

@@ -7,13 +7,10 @@ This is a simple command line tool that generates dart classes from your Supabas
 ```bash
 # 🎯 Active from pub.dev
 dart pub global activate supadart
-```
 
-```bash
-# 🚀 Run via
-supadart
-# or
-dart pub global run supadart
+# 🏠 Initial config file
+supadart -i
+
 ```
 
 ## Configuration
@@ -28,8 +25,6 @@ supabase_anon_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Optional, where to place the generated classes files
 output: lib/models/
-# Optional, if you want to generate separated files for each classes
-separated: true
 # Optional, if you are not using Flutter, just normal Dart project
 flutter: true
 # Optional, used to map table names to class names(case-sensitive)
@@ -49,9 +44,6 @@ supadart
 # If you have a .yaml file in a different location
 supadart -c path/to/.yaml
 
-# If you dont have a .env file specify the Supabase URL and ANON KEY
-supadart -u <your-supabase-url> -k <your-supabase-anon-key>
-
 ```
 
 ## Options
@@ -60,10 +52,5 @@ supadart -u <your-supabase-url> -k <your-supabase-anon-key>
 -h, --help         Show usage information
 -i, --init         Initialize config file supadart.yaml
 -c, --config       Path to config file of yaml         --(default: supadart.yaml)
--u, --url          Supabase URL                        --(default: supadart.yaml supabase_url)
--k, --key          Supabase ANON KEY                   --(default: supadart.yaml supabase_anon_key)
--o, --output       Output file path, add ./ prefix     --(default: ./lib/generated_classes.dart or ./lib/models/ if --separated is enabled
--d, --dart         Generation for pure Dart project    --(default: false)
--s, --separated    Separated files for each classes    --(default: false)
 -v, --version      v1.3.8
 ```
